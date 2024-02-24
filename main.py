@@ -1,3 +1,4 @@
+import json
 import os
 
 from flask import Flask, render_template, redirect, request
@@ -44,6 +45,11 @@ def gallery():
             f.write(file.stream.read())
         return redirect('/gallery')
 
+@app.route('/member')
+def member():
+    with open('templates/members.json', 'r', encoding='utf8') as f:
+        members = json.load(f)['members']
+    return render_template('member.html', members=members)
 
 if __name__ == '__main__':
     app.run("", 8080)
